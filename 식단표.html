@@ -1,0 +1,27 @@
+<html>
+<body onload="GetImg();">
+</body>
+
+<script>
+    function GetImg(){
+    var xhr = new XMLHttpRequest();
+    console.log();
+    var url = 'https://gbmo.go.kr/chungsa/dv/dietView/selectDietCalendarView.do';
+    var params = 'gbd=CD001&rc=1078';
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        console.log(xhr.readyState);
+        console.log(xhr.status);
+    if (this.readyState === XMLHttpRequest.DONE && (this.status === 200 || this.status==0)) {
+        var doc = new DOMParser().parseFromString(this.responseText, "text/html");
+        doc.images[8].src = 'https://gbmo.go.kr' + doc.images[8].src.substring(7);
+        console.log(doc.images[8]);
+        document.body.innerHTML = doc.images[8].outerHTML;
+        }
+    }
+    xhr.send(params);
+    }
+</script>
+
+</html>
